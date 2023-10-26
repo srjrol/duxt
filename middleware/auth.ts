@@ -1,6 +1,8 @@
-import { useAuth } from '~/store/auth'
-const msg =
-  'You must be logged in to view this page. Redirecting back to home page.'
+// middleware/auth.ts
+
+import { useAuth } from '~/stores/auth'
+
+const msg = 'You must be logged in to view this page. Redirecting back to home page.'
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const user = useAuth()

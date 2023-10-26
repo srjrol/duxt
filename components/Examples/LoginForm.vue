@@ -38,7 +38,7 @@
 <script setup>
 import { CursorArrowRaysIcon } from '@heroicons/vue/24/outline'
 // Import the auth store from pinia
-import { useAuth } from '~~/store/auth'
+import { useAuth } from '~~/stores/auth'
 const auth = useAuth()
 
 const email = ref()

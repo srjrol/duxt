@@ -17,10 +17,10 @@ export const useAuth = defineStore('auth', {
   },
 
   actions: {
-    async login({ email, password, redirect }) {
+    async login({ email, password, redirect }: { email: string; password: string; redirect?: string }) {
       const router = useRouter()
       const { $directus } = useNuxtApp()
-
+      console.dir($directus, { depth: null });  // log a detailed view of the $directus object
       try {
         // Try to login
         const response = await $directus.auth.login({

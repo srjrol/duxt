@@ -1,5 +1,5 @@
 import { BaseStorage, Directus } from '@directus/sdk'
-import { useAuth } from '~~/store/auth'
+import { useAuth } from '~~/stores/auth'
 
 // Make sure you review the Directus SDK documentation for more information
 // https://docs.directus.io/reference/sdk.html

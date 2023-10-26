@@ -8,6 +8,8 @@ export default defineNuxtConfig({
   //     '/posts/**': { static: true },
   //   },
 
+  devtools: { enabled: true },
+  
   css: [],
 
   modules: [

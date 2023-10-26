@@ -63,7 +63,7 @@
 <script setup>
 // Get user data from the store
 import { storeToRefs } from 'pinia'
-import { useAuth } from '~~/store/auth'
+import { useAuth } from '~~/stores/auth'
 const auth = useAuth()
 const { fileUrl } = useFiles()
 const { isLoggedIn, user } = storeToRefs(auth)

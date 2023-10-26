@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { useAuth } from '~~/store/auth'
+import { useAuth } from '~~/stores/auth'
 
 const auth = useAuth()
 
