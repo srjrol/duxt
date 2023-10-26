@@ -7,7 +7,7 @@
         "allupdate": "pnpm update --interactive"
     },
     "devDependencies": {
-        "@directus/sdk": "^10.3.5",
+        "@directus/sdk": "^13.0.0",
         "@headlessui/vue": "^1.7.16",
         "@heroicons/vue": "^2.0.18",
         "@nuxtjs/tailwindcss": "^6.8.1",
