@@ -33,55 +33,21 @@ type User = {
   expires: number;
 };
 
-// Define your custom storage class
 class PiniaStorage {
   constructor(private authStore: ReturnType<typeof useAuth>) {}
 
-  get(): { data: { access_token: string; expires: number } } | null {
+  // Return the entire user state
+  get(): { data: User } | null {
     const { loggedIn, user } = this.authStore.$state;
-    if (loggedIn && user.token && user.expires) {
-      return {
-        data: {
-          access_token: user.token,
-          expires: user.expires,
-        },
-      };
+    if (loggedIn && user) {
+      return { data: user };
     }
     return null;
   }
 
-  set(authData: { data: { access_token: string; expires: number } }): void {
-    const { access_token, expires } = authData.data;
-    this.authStore.$state.loggedIn = true;
-    this.authStore.$state.user = {
-      id: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      password: '',
-      location: '',
-      title: '',
-      description: '',
-      tags: [],
-      avatar: '',
-      language: '',
-      appearance: '',
-      theme_light: '',
-      theme_dark: '',
-      theme_light_overrides: {},
-      theme_dark_overrides: {},
-      tfa_secret: '',
-      status: '',
-      role: '',
-      token: access_token,
-      last_access: '',
-      last_page: '',
-      provider: '',
-      external_identifier: '',
-      auth_data: {},
-      email_notifications: false,
-      expires: expires,
-    };
+  // Update the entire user state
+  set(authData: { data: User }): void {
+    this.authStore.updateUser(authData.data);
   }  
 }
 
@@ -225,53 +191,39 @@ export const useAuth = defineStore('auth', {
 
     async getUser() {
       const { $directus } = useNuxtApp();
-      console.log("getUser: ", $directus)
       try {
         const user = await $directus.request(
           readMe({
-            fields: ['*'],
+            fields: ['*'], // Assuming this returns all fields necessary for the User type
           })
         );
-        console.log(user)
-        this.$state.loggedIn = true;
-        this.$state.user = {
-          id: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          password: user.password,
-          location: user.location,
-          title: user.title,
-          description: user.description,
-          tags: user.tags,
-          avatar: user.avatar,
-          language: user.language,
-          appearance: user.appearance,
-          theme_light: user.theme_light,
-          theme_dark: user.theme_dark,
-          theme_light_overrides: user.theme_light_overrides,
-          theme_dark_overrides: user.theme_dark_overrides,
-          tfa_secret: user.tfa_secret,
-          status: user.status,
-          role: user.role,
-          token: user.token || '',
-          last_access: user.last_access,
-          last_page: user.last_page,
-          provider: user.provider,
-          external_identifier: user.external_identifier,
-          auth_data: user.auth_data,
-          email_notifications: user.email_notifications,
-          expires: user.expires || -1,
-        };
+  
+        // You must ensure that 'user' contains all the properties required by the User type
+        // The spread of 'this.$state.user' helps maintain any existing properties
+        this.updateUser({
+          ...this.$state.user, // Spread the current state to fill in any missing properties
+          ...user, // Spread the fetched user
+          token: this.$state.user.token, // Preserve the token
+          expires: this.$state.user.expires // Preserve the expires
+        });
       } catch (e) {
         console.log(e);
       }
-    },  
+    },
     
+    updateUser(userData: User): void {
+      // Ensure to remove or not include sensitive data like password
+      const { password, ...safeUserData } = userData;
+      this.$state.loggedIn = true;
+      this.$state.user = safeUserData;
+    },
     async resetState() {
       this.$reset();
     },
+    persist: true,
   },
+  
 });
+
 
 export { PiniaStorage };

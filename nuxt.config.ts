@@ -16,6 +16,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     // https://pinia.esm.dev
     '@pinia/nuxt',
+    // https://nuxt.com/modules/pinia-plugin-persistedstate
+    '@pinia-plugin-persistedstate/nuxt',
     // https://vueuse.org/
     '@vueuse/nuxt',
   ],
