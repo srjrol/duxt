@@ -27,8 +27,7 @@
           variant="primary"
           :disabled="!email || !password"
         >
-          <span>Login</span>
-          <CursorArrowRaysIcon class="w-5 h-5 ml-2" />
+          <span>Login with Directus 🐇</span>
         </VButton>
       </div>
     </div>
@@ -36,7 +35,7 @@
 </template>
 
 <script setup>
-import { CursorArrowRaysIcon } from '@heroicons/vue/24/outline'
+
 // Import the auth store from pinia
 import { useAuth } from '~~/stores/auth'
 const auth = useAuth()
@@ -47,7 +46,7 @@ const error = ref(null)
 const loading = ref(false)
 
 function loadDemoUser() {
-  email.value = 'user@example.com'
+  email.value = 'admin@example.com'
   password.value = 'password'
 }
 

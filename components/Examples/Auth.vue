@@ -25,7 +25,7 @@
               <img
                 class="w-20 h-20 mr-4 border-2 rounded-3xl border-primary-300"
                 :src="fileUrl(user.avatar)"
-              />
+              >
               <div class="mr-4">
                 <p class="text-2xl font-bold dark:text-white">
                   Welcome {{ user.first_name }}!
@@ -64,7 +64,9 @@
 // Get user data from the store
 import { storeToRefs } from 'pinia'
 import { useAuth } from '~~/stores/auth'
+import { readMe } from '@directus/sdk'
 const auth = useAuth()
 const { fileUrl } = useFiles()
 const { isLoggedIn, user } = storeToRefs(auth)
+console.log(user)
 </script>

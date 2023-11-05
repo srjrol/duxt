@@ -1,12 +1,30 @@
 # Nuxt 3 / Directus Starter
 
-Opinionated starter template for Nuxt 3 using Directus 9 as a backend. Develop internal or client applications faster with this batteries-included starter.
+Dockerized starter package for Nuxt 3 with Directus 13 as a backend.
 
-**[View The Demo Site](https://directus-nuxt3-starter.netlify.app/)**
+**Changes**
+- Package manager: pnpm
+- Nuxt upgrade from 3.5.2 to 3.8.0
+- `app\router.options.ts` updated for TypeScript
+- `auth` store changed from `\store` to `\stores` for [pinia auto imports](https://pinia.vuejs.org/ssr/nuxt.html)
+- Nuxt [middleware](https://nuxt.com/docs/api/utils/define-nuxt-route-middleware) `\middleware\auth.js`changed to TypeScript `\middleware\auth.ts`
+- Dockerized deployment for [Directus](https://hub.docker.com/r/directus/directusand) using [PostresSQL] (https://hub.docker.com/r/postgis/postgis)
+ - The postgis image provides tags for running Postgres with PostGIS extensions installed which Directus requires for Geometry type support.
+
+ **Isues**
+ Despite using posgtgis image I am seeing this warnign in docker logs:
+ `WARN: PostGIS isn't installed. Geometry type support will be limited.`
+
+It's possible that the PostGIS extensions haven't been enabled in the PostgreSQL database being used by Directus and while the postgis/postgis Docker image includes the PostGIS extensions, they still need to be enabled within each database where you want to use them.
+
+You can enable the PostGIS extensions by connecting to your PostgreSQL database and running the following SQL commands:
+
+`CREATE EXTENSION IF NOT EXISTS postgis;`
+`CREATE EXTENSION IF NOT EXISTS postgis_topology;`
 
 **Features**
 
-- Built-in Directus 9 support to use as your backend, API, headless CMS - whatever your use case
+- Built-in Directus 13 support to use as your backend, API, headless CMS - whatever your use case
 - Tailwind CSS with all plugins, HeadlessUI, and Heroicons (Now Using V2) icon support
 - Authentication and user store already configured for you
 - Ready to use common components like modals, dropdowns, and file upload input

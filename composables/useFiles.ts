@@ -1,8 +1,7 @@
 export default function useFiles() {
   const { $config } = useNuxtApp()
-
-  function fileUrl(fileId) {
-    return `${$config.public.directusUrl}/assets/${fileId}`
+  function fileUrl(fileId: string) {
+    return `${$config.public.DIRECTUS_URL}/assets/${fileId}`
   }
 
   return {
