@@ -54,15 +54,13 @@ async function login() {
   loading.value = true
   error.value = null
   try {
-    // Login
-    await auth.login({
-      email: email.value,
-      password: password.value,
-    })
-    // Clear the form
+    console.log('Attempting to login with:', email.value);
+    await auth.login(email.value, password.value);
+    console.log('Login successful:', auth.user);
     email.value = ''
     password.value = ''
   } catch (e) {
+    console.error('Login failed:', e);
     error.value = e.message
   } finally {
     loading.value = false
